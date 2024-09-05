@@ -15,4 +15,21 @@ public class VacancyService {
     public List<Vacancy> getVacancies() {
         return vacancyRepository.getVacancies();
     }
+
+    public Vacancy getVacancyById(String id) {
+        return vacancyRepository.getVacancyById(id);
+    }
+
+    public void addVacancy(Vacancy vacancy) {
+        vacancyRepository.addVacancy(vacancy);
+    }
+
+    public void updateVacancy(String id, Vacancy vacancy) {
+        vacancyRepository.updateVacancy(id, vacancy);
+    }
+
+    public void deleteVacancy(String id) {
+        vacancyRepository.deleteVacancy(id);
+    }
+
 }
