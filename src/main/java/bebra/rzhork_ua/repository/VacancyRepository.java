@@ -22,14 +22,14 @@ public class VacancyRepository {
     }
 
     public void addVacancy(Vacancy vacancy) {
-        System.out.println("Added vacancy");
+        System.out.println("Added vacancy: " + vacancy.title);
     }
 
     public void updateVacancy(String id, Vacancy vacancy) {
-        System.out.println("Update vacancy");
+        System.out.println("Update vacancy: " + vacancy.title + " with id: " + id);
     }
 
     public void deleteVacancy(String id) {
-        System.out.println("Deleted vacancy");
+        System.out.println("Deleted vacancy with id: " + id);
     }
 }

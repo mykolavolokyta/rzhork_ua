@@ -19,30 +19,41 @@ public class VacancyController {
     public String getVacancies(Model model) {
         List<Vacancy> vacancies = vacancyService.getVacancies();
         model.addAttribute("vacancies", vacancies);
-        return "vacancies";
+        return "vacancy/index";
     }
 
     @GetMapping("/{id}")
     public String getVacancy(@PathVariable String id, Model model) {
         Vacancy vacancy = vacancyService.getVacancyById(id);
         model.addAttribute("vacancy", vacancy);
-        return "vacancy";
+        return "vacancy/show";
     }
 
+    @GetMapping("/create")
+    public String createVacancy() {
+        return "vacancy/create";
+    }
 
-    @PostMapping
-    public String addVacancy(@RequestBody Vacancy vacancy) {
+    @GetMapping("/edit/{id}")
+    public String editVacancy(@PathVariable String id, Model model) {
+        Vacancy vacancy = vacancyService.getVacancyById(id);
+        model.addAttribute("vacancy", vacancy);
+        return "vacancy/edit";
+    }
+
+    @PostMapping("/create")
+    public String addVacancy(Vacancy vacancy) {
         vacancyService.addVacancy(vacancy);
         return "redirect:/vacancies";
     }
 
-    @PutMapping("/{id}")
-    public String updateVacancy(@PathVariable String id, @RequestBody Vacancy vacancy) {
+    @PostMapping("/edit/{id}")
+    public String updateVacancy(@PathVariable String id, Vacancy vacancy) {
         vacancyService.updateVacancy(id, vacancy);
-        return "redirect:/vacancies/";
+        return "redirect:/vacancies";
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteVacancy(@PathVariable String id) {
         vacancyService.deleteVacancy(id);
         return "redirect:/vacancies";
