@@ -12,7 +12,6 @@ public class Vacancy {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     private String title;
     private double salary;
     private String location;
