@@ -7,7 +7,7 @@
 <section th:fragment="content">
     <div class="max-w-2xl mx-auto px-8 sm:px-10 lg:px-12 py-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-6">Create New Vacancy</h1>
-        <form action="/vacancies/create" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form th:action="@{'/vacancies/create'}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                     Title

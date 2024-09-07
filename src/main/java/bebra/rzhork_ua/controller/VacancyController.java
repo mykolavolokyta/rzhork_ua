@@ -1,6 +1,6 @@
 package bebra.rzhork_ua.controller;
 
-import bebra.rzhork_ua.model.Vacancy;
+import bebra.rzhork_ua.entity.Vacancy;
 import bebra.rzhork_ua.service.VacancyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/vacancies")
@@ -23,8 +24,8 @@ public class VacancyController {
     }
 
     @GetMapping("/{id}")
-    public String getVacancy(@PathVariable String id, Model model) {
-        Vacancy vacancy = vacancyService.getVacancyById(id);
+    public String getVacancy(@PathVariable UUID id, Model model) {
+        Vacancy vacancy = vacancyService.getVacancy(id);
         model.addAttribute("vacancy", vacancy);
         return "vacancy/show";
     }
@@ -35,8 +36,8 @@ public class VacancyController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editVacancy(@PathVariable String id, Model model) {
-        Vacancy vacancy = vacancyService.getVacancyById(id);
+    public String editVacancy(@PathVariable UUID id, Model model) {
+        Vacancy vacancy = vacancyService.getVacancy(id);
         model.addAttribute("vacancy", vacancy);
         return "vacancy/edit";
     }
@@ -48,13 +49,13 @@ public class VacancyController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateVacancy(@PathVariable String id, Vacancy vacancy) {
+    public String updateVacancy(@PathVariable UUID id, Vacancy vacancy) {
         vacancyService.updateVacancy(id, vacancy);
         return "redirect:/vacancies";
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteVacancy(@PathVariable String id) {
+    public String deleteVacancy(@PathVariable UUID id) {
         vacancyService.deleteVacancy(id);
         return "redirect:/vacancies";
     }
