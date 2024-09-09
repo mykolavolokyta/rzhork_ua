@@ -28,12 +28,11 @@ public class User implements UserDetails {
     )
     private Set<Role> roles;
 
-    public Set<Role> getRoles() {
-        return roles;
+    public User() {
     }
 
-    public User(String username) {
-        this.username = username;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     public void setRoles(Set<Role> roles) {
@@ -43,6 +42,10 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
