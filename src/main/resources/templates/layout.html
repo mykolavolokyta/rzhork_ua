@@ -35,14 +35,14 @@
             </div>
             <div class="hidden lg:flex lg:gap-x-12">
                 <a href="/vacancies" class="font-semibold leading-6 text-gray-900">Вакансії</a>
-                <a href="#" class="font-semibold leading-6 text-gray-900">Компанії</a>
+                <a href="/companies" class="font-semibold leading-6 text-gray-900">Компанії</a>
             </div>
             <div sec:authorize="!isAuthenticated()" class="hidden lg:flex lg:flex-1 lg:justify-end">
                 <a href="/login" class="font-semibold leading-6 text-gray-900">Увійти<span aria-hidden="true">&rarr;</span></a>
             </div>
 
             <div sec:authorize="isAuthenticated()" class="hidden lg:flex lg:flex-1 lg:justify-end">
-                <a th:href="@{/profile/{id}(id=${#authentication.principal.id})}" class="font-semibold leading-6 text-gray-900">Мій профіль</a>
+                <a th:href="@{'/my/profile'}" class="font-semibold leading-6 text-gray-900">Мій профіль</a>
                 <form th:action="@{/logout}" method="post" class="ml-4">
                     <button type="submit" class="font-semibold leading-6 text-gray-900">Вийти</button>
                 </form>

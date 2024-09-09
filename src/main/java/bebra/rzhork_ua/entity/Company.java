@@ -2,24 +2,24 @@ package bebra.rzhork_ua.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
-public class Vacancy {
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(nullable = false, unique = true)
     private String title;
-    private double salary;
     private String location;
     private String description;
-    private Date date;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private Company company;
+    private int joinYear;
 
-    public Vacancy() {
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Vacancy> vacancies;
+
+    public Company() {
     }
 
     public UUID getId() {
@@ -38,14 +38,6 @@ public class Vacancy {
         this.title = title;
     }
 
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -62,19 +54,19 @@ public class Vacancy {
         this.description = description;
     }
 
-    public Date getDate() {
-        return date;
+    public int getJoinYear() {
+        return joinYear;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setJoinYear(int joinYear) {
+        this.joinYear = joinYear;
     }
 
-    public Company getCompany() {
-        return company;
+    public Set<Vacancy> getVacancies() {
+        return vacancies;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setVacancies(Set<Vacancy> vacancies) {
+        this.vacancies = vacancies;
     }
 }

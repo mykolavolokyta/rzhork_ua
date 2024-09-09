@@ -30,14 +30,16 @@
                             <p th:text="${vacancy.title}" class="text-lg font-bold leading-6 text-gray-900"></p>
                             <p th:text="'Location: ' + ${vacancy.location}"
                                class="mt-2 text-sm leading-6 text-gray-500"></p>
-                            <p th:text="'Company: ' + ${vacancy.company}"
+                            <p th:text="'Company: ' + ${vacancy.company.title}"
                                class="mt-2 text-sm leading-6 text-gray-500"></p>
                         </div>
                     </div>
                     <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                         <p th:text="${vacancy.salary.intValue()} + ' грн/місяць'"
                            class="text-lg leading-6 text-gray-900"></p>
-                        <p class="mt-2 text-sm leading-6 text-gray-500">Posted: <span th:text="24.02.2022"></span></p>
+                        <p class="mt-2 text-sm leading-6 text-gray-500">
+                            Posted: <span th:text="${#dates.format(vacancy.date, 'yyyy-MM-dd')}"></span>
+                        </p>
                     </div>
                 </a>
             </li>

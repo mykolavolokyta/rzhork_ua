@@ -1,6 +1,5 @@
 package bebra.rzhork_ua.config;
 
-import bebra.rzhork_ua.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/login", "/register", "/css/**", "/js/**", "/vacancies").permitAll()  // Дозволити доступ до сторінки логіну та статичних ресурсів
+                        .requestMatchers("/login", "/register", "/css/**", "/js/**", "/vacancies").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
