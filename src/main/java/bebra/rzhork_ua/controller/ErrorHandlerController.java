@@ -15,6 +15,9 @@ public class ErrorHandlerController implements ErrorController {
 
         if (status != null) {
             Integer statusCode = (Integer) status;
+            if (statusCode == 400) {
+                errorPage = "errors/400";
+            }
             if (statusCode == 404) {
                 errorPage = "errors/404";
             }

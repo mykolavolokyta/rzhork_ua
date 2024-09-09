@@ -2,6 +2,7 @@ package bebra.rzhork_ua.service;
 
 import bebra.rzhork_ua.entity.Role;
 import bebra.rzhork_ua.entity.User;
+import bebra.rzhork_ua.entity.Vacancy;
 import bebra.rzhork_ua.repository.RoleRepository;
 import bebra.rzhork_ua.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -30,6 +32,10 @@ public class UserService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    public User getUser(UUID id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     public boolean saveUser(User user, String roleName) {
