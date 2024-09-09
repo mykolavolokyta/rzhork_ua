@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,13 +37,12 @@
                 <a href="/vacancies" class="font-semibold leading-6 text-gray-900">Вакансії</a>
                 <a href="#" class="font-semibold leading-6 text-gray-900">Компанії</a>
             </div>
-
             <div sec:authorize="!isAuthenticated()" class="hidden lg:flex lg:flex-1 lg:justify-end">
                 <a href="/login" class="font-semibold leading-6 text-gray-900">Увійти<span aria-hidden="true">&rarr;</span></a>
             </div>
 
             <div sec:authorize="isAuthenticated()" class="hidden lg:flex lg:flex-1 lg:justify-end">
-<!--                <a th:href="@{'profile/' + ${user.id}}" class="font-semibold leading-6 text-gray-900">Мій профіль</a>-->
+                <a th:href="@{/profile/{id}(id=${#authentication.principal.id})}" class="font-semibold leading-6 text-gray-900">Мій профіль</a>
                 <form th:action="@{/logout}" method="post" class="ml-4">
                     <button type="submit" class="font-semibold leading-6 text-gray-900">Вийти</button>
                 </form>

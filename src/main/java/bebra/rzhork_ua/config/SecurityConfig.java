@@ -1,10 +1,8 @@
 package bebra.rzhork_ua.config;
 
 import bebra.rzhork_ua.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,9 +15,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Lazy
-    @Autowired
-    UserDetailsService userDetailsService;
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new UserService();
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -43,7 +42,7 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout=true")
                         .permitAll()
-                );;
+                );
         return http.build();
     }
 
@@ -53,7 +52,7 @@ public class SecurityConfig {
         AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
+                .userDetailsService(userDetailsService())
                 .passwordEncoder(bCryptPasswordEncoder());
         return authenticationManagerBuilder.build();
     }

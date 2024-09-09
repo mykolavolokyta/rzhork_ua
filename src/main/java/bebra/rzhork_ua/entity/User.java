@@ -31,6 +31,14 @@ public class User implements UserDetails {
     public User() {
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
