@@ -4,47 +4,53 @@
     <title>Create Vacancy - rzhork.ua</title>
 </head>
 <body>
-<section th:fragment="content">
-    <div class="max-w-2xl mx-auto px-8 sm:px-10 lg:px-12 py-8">
-        <h1 class="text-3xl font-bold text-gray-900 mb-6">Create New Vacancy</h1>
-        <form th:action="@{'/vacancies/create'}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                    Title
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" name="title" type="text" placeholder="Job Title" required>
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="company">
-                    Company
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company" name="company" type="text" placeholder="Company Name" required>
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="location">
-                    Location
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="location" name="location" type="text" placeholder="Job Location" required>
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="salary">
-                    Salary (грн/місяць)
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="salary" name="salary" type="number" placeholder="Salary" required>
-            </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
-                    Description
-                </label>
-                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" placeholder="Job Description" rows="4" required></textarea>
-            </div>
-            <div class="flex items-center justify-between">
-                <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                    Create Vacancy
-                </button>
-            </div>
-        </form>
-    </div>
-</section>
+    <section th:fragment="content">
+        <div class="max-w-2xl mx-auto px-8 sm:px-10 lg:px-12 py-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Create New Vacancy</h1>
+            <form th:action="@{'/vacancies/create'}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="title">
+                        Title
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" name="title" type="text" placeholder="Job Title" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="location">
+                        Location
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="location" name="location" type="text" placeholder="Job Location" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="salary">
+                        Salary (грн/місяць)
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           id="salary" name="salary" type="number" placeholder="Salary" min="0" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-bold mb-2" for="description">
+                        Description
+                    </label>
+                    <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" placeholder="Job Description" rows="4" required></textarea>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Create Vacancy
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById("salary").addEventListener("input", function () {
+            var salaryInput = document.getElementById("salary");
+            if (salaryInput.value < 0) {
+                salaryInput.setCustomValidity("Праця повинна бути оплачувана.");
+            } else {
+                salaryInput.setCustomValidity("");
+            }
+        });
+    </script>
 </body>
 </html>

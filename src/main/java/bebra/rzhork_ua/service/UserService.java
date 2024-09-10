@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        Role role = roleRepository.findByName("ROLE_VIEWER");
+        Role role = roleRepository.findByName("ROLE_JOBSEEKER");
         user.setRoles(Set.of(role));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
@@ -67,6 +67,9 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+
+        Role role = roleRepository.findByName("ROLE_COMPANY");
+        user.setRoles(Set.of(role));
 
         Company company = new Company();
         company.setTitle(dto.getCompanyTitle());

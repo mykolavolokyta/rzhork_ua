@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{layout :: layout(~{::title}, ~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout :: layout(~{::title}, ~{::content})}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <title>Vacancy Details - rzhork.ua</title>
 </head>
@@ -28,7 +28,7 @@
                 <p th:text="${vacancy.description}" class="text-gray-700 leading-relaxed"></p>
             </div>
 
-            <div class="mt-8 flex justify-end items-center space-x-4">
+            <div sec:authorize="hasRole('COMPANY')" class="mt-8 flex justify-end items-center space-x-4">
                 <a th:href="@{'/vacancies/edit/' + ${vacancy.id}}"
                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
                     Редагувати вакансію

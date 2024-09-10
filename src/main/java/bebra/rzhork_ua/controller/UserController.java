@@ -2,6 +2,7 @@ package bebra.rzhork_ua.controller;
 
 import bebra.rzhork_ua.model.entity.User;
 import bebra.rzhork_ua.service.UserService;
+import bebra.rzhork_ua.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,21 +19,13 @@ public class UserController {
 
     @GetMapping("/my/profile")
     public String myProfile(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            Object principal = authentication.getPrincipal();
-            String username;
-            if (principal instanceof UserDetails) {
-                username = ((UserDetails) principal).getUsername();
-            } else {
-                username = principal.toString();
-            }
+        String username = SecurityUtils.getCurrentUsername();
+        if (username != null) {
             User user = userService.findByUsername(username);
             model.addAttribute("user", user);
-        } else {
-            return "redirect:/login";
+            return "profile";
         }
-        return "profile";
+        return "redirect:/login";
     }
 
 }

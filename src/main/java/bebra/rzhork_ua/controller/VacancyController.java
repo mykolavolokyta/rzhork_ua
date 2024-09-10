@@ -1,7 +1,10 @@
 package bebra.rzhork_ua.controller;
 
+import bebra.rzhork_ua.model.entity.User;
 import bebra.rzhork_ua.model.entity.Vacancy;
+import bebra.rzhork_ua.service.UserService;
 import bebra.rzhork_ua.service.VacancyService;
+import bebra.rzhork_ua.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,9 @@ import java.util.UUID;
 public class VacancyController {
     @Autowired
     private VacancyService vacancyService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public String getVacancies(Model model) {
@@ -44,8 +50,14 @@ public class VacancyController {
 
     @PostMapping("/create")
     public String addVacancy(Vacancy vacancy) {
-        vacancyService.addVacancy(vacancy);
-        return "redirect:/vacancies";
+        String username = SecurityUtils.getCurrentUsername();
+        if (username != null) {
+            User user = userService.findByUsername(username);
+            vacancy.setCompany(user.getCompany());
+            vacancyService.addVacancy(vacancy);
+            return "redirect:/vacancies";
+        }
+        return "redirect:/login";
     }
 
     @PostMapping("/edit/{id}")

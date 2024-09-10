@@ -26,7 +26,9 @@ public class VacancyService {
     }
 
     public void updateVacancy(UUID id, Vacancy vacancy) {
+        Vacancy oldVacancy = getVacancy(id);
         vacancy.setId(id);
+        vacancy.setCompany(oldVacancy.getCompany());
         vacancyRepository.save(vacancy);
     }
 

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html th:replace="~{layout :: layout(~{::title}, ~{::content})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout :: layout(~{::title}, ~{::content})}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <title>Vacancies - rzhork.ua</title>
 </head>
 <body>
 <section th:fragment="content">
     <div class="max-w-6xl mx-auto px-8 sm:px-10 lg:px-12 py-8">
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8 flex items-center justify-between">
+        <div sec:authorize="hasRole('COMPANY')" class="bg-white rounded-lg shadow-md p-6 mb-8 flex items-center justify-between">
             <div class="flex items-center">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWtmnfjf1Lk0rais3ed4FV35pB2hEATlZHYw&s"
                      alt="Create Vacancy"
