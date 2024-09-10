@@ -1,4 +1,4 @@
-package bebra.rzhork_ua.entity;
+package bebra.rzhork_ua.model.entity;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,6 +27,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
+    private Company company;
 
     public User() {
     }
@@ -63,6 +66,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override

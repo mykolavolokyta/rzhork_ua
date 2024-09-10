@@ -1,4 +1,4 @@
-package bebra.rzhork_ua.entity;
+package bebra.rzhork_ua.model.entity;
 
 import jakarta.persistence.*;
 
@@ -15,6 +15,10 @@ public class Company {
     private String location;
     private String description;
     private int joinYear;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Vacancy> vacancies;
@@ -68,5 +72,13 @@ public class Company {
 
     public void setVacancies(Set<Vacancy> vacancies) {
         this.vacancies = vacancies;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

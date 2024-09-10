@@ -1,6 +1,6 @@
 package bebra.rzhork_ua.controller;
 
-import bebra.rzhork_ua.entity.Company;
+import bebra.rzhork_ua.model.entity.Company;
 import bebra.rzhork_ua.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

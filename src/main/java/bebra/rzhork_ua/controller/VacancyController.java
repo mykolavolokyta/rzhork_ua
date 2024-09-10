@@ -1,6 +1,6 @@
 package bebra.rzhork_ua.controller;
 
-import bebra.rzhork_ua.entity.Vacancy;
+import bebra.rzhork_ua.model.entity.Vacancy;
 import bebra.rzhork_ua.service.VacancyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

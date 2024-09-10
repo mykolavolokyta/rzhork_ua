@@ -1,4 +1,4 @@
-package bebra.rzhork_ua.entity;
+package bebra.rzhork_ua.model.entity;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;

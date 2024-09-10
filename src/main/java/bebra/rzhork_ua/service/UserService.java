@@ -1,8 +1,9 @@
 package bebra.rzhork_ua.service;
 
-import bebra.rzhork_ua.entity.Role;
-import bebra.rzhork_ua.entity.User;
-import bebra.rzhork_ua.entity.Vacancy;
+import bebra.rzhork_ua.model.dto.UserWithCompanyDTO;
+import bebra.rzhork_ua.model.entity.Company;
+import bebra.rzhork_ua.model.entity.Role;
+import bebra.rzhork_ua.model.entity.User;
 import bebra.rzhork_ua.repository.RoleRepository;
 import bebra.rzhork_ua.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
@@ -43,16 +43,39 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public boolean saveUser(User user, String roleName) {
+    public boolean saveUser(User user) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
 
         if (userFromDB != null) {
             return false;
         }
 
-        Role role = roleRepository.findByName(roleName);
+        Role role = roleRepository.findByName("ROLE_VIEWER");
         user.setRoles(Set.of(role));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return true;
+    }
+
+    public boolean saveUserCompany(UserWithCompanyDTO dto) {
+        User userFromDB = userRepository.findByUsername(dto.getUsername());
+
+        if (userFromDB != null) {
+            return false;
+        }
+        System.out.println(dto.getCompanyDescription());
+        User user = new User();
+        user.setUsername(dto.getUsername());
+        user.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+
+        Company company = new Company();
+        company.setTitle(dto.getCompanyTitle());
+        company.setDescription(dto.getCompanyDescription());
+        company.setLocation(dto.getCompanyLocation());
+        company.setJoinYear(dto.getCompanyJoinYear());
+
+        user.setCompany(company);
+        company.setUser(user);
         userRepository.save(user);
         return true;
     }

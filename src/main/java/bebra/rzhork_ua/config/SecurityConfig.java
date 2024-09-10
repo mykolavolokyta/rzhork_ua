@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,7 +30,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/login", "/register", "/css/**", "/js/**", "/vacancies").permitAll()
+                        .requestMatchers("/login", "/register", "/jobseeker/register", "/company/register", "/css/**", "/js/**", "/vacancies", "/companies").permitAll().
+                        requestMatchers("/vacancies/create", "/vacancies/edit/**", "/vacancies/delete/**").hasRole("COMPANY")
+                        .requestMatchers("/vacancies/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin

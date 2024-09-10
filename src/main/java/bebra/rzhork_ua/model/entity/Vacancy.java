@@ -1,6 +1,7 @@
-package bebra.rzhork_ua.entity;
+package bebra.rzhork_ua.model.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 import java.util.UUID;
@@ -14,6 +15,8 @@ public class Vacancy {
     private double salary;
     private String location;
     private String description;
+    @CreationTimestamp
+    @Column(updatable = false)
     private Date date;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")

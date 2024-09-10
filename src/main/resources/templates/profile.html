@@ -5,26 +5,39 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-    <section th:fragment="content">
-        <div class="max-w-7xl mx-auto p-6 sm:p-10 lg:p-12">
-            <div class="bg-white shadow-lg rounded-lg p-8">
-                <div class="flex flex-col md:flex-row items-center md:items-start">
-                    <div class="md:ml-8 mt-4 md:mt-0 w-full">
-                        <div class="flex justify-between items-center">
-                            <h1 class="text-3xl font-bold text-gray-900" th:text="${user.username}">Ім'я користувача</h1>
-                            <button class="text-indigo-600 hover:text-indigo-500 text-sm font-medium">Редагувати профіль</button>
-                        </div>
-                        <p class="text-gray-600 mt-2">Пароль: <span class="font-semibold" th:text="${user.password}">******</span></p>
-                        <div sec:authorize="!isAuthenticated()">
-                            This content is only shown to unauthenticated users.
-                        </div>
-                        <div sec:authorize="isAuthenticated()">
-                            This content is only shown to authenticated users.
-                        </div>
+<section th:fragment="content">
+    <div class="max-w-6xl mx-auto px-4 py-8 sm:px-6 sm:py-12 md:px-8 md:py-16 lg:px-12 lg:py-20">
+        <div class="bg-white shadow-lg rounded-lg p-6 sm:p-8 md:p-10">
+            <div class="flex flex-col md:flex-row items-start">
+                <div class="w-full">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                        <h1 class="text-xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-0" th:text="${user.username}">Ім'я користувача</h1>
+                        <button class="text-indigo-600 hover:text-indigo-500 text-base sm:text-lg font-medium mt-2 sm:mt-0">Редагувати профіль</button>
                     </div>
+                    <p class="text-gray-600 mt-4 text-base sm:text-lg">
+                        Пароль:
+                        <span id="passwordDisplay" class="font-semibold cursor-pointer"
+                              th:data-password="${user.password}"
+                              onclick="togglePassword()">
+                            ••••••
+                        </span>
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <script th:inline="javascript">
+        function togglePassword() {
+            const passwordSpan = document.getElementById('passwordDisplay');
+            const actualPassword = passwordSpan.getAttribute('data-password');
+            if (passwordSpan.textContent === '••••••') {
+                passwordSpan.textContent = actualPassword;
+            } else {
+                passwordSpan.textContent = '••••••';
+            }
+        }
+    </script>
+</section>
 </body>
 </html>
