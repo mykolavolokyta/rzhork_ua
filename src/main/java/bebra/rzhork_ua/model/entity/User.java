@@ -17,6 +17,8 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     private String username;
 
+    private String name;
+
     @Column(nullable = false)
     private String password;
 
@@ -74,6 +76,14 @@ public class User implements UserDetails {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

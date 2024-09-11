@@ -12,6 +12,7 @@
                 <div class="w-full">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
                         <h1 class="text-xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-0" th:text="${company.title}">Назва компанії</h1>
+                        <a th:href="@{'/company/profile/edit'}" class="text-indigo-600 hover:text-indigo-500 text-base sm:text-lg font-medium mt-2 sm:mt-0">Редагувати профіль компанії</a>
                     </div>
                     <p class="text-gray-600 mt-2 text-lg">
                         <strong>Місцезнаходження:</strong>
