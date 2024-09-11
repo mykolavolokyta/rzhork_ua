@@ -31,7 +31,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/login", "/register", "/jobseeker/register", "/company/register", "/css/**", "/js/**", "/vacancies", "/companies").permitAll().
-                        requestMatchers("/vacancies/create", "/vacancies/edit/**", "/vacancies/delete/**").hasRole("COMPANY")
+                        requestMatchers("/vacancies/create", "/vacancies/edit/**", "/vacancies/delete/**", "companies/profile").hasRole("COMPANY")
                         .requestMatchers("/vacancies/**").permitAll()
                         .anyRequest().authenticated()
                 )

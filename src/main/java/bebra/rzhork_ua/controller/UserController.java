@@ -4,16 +4,12 @@ import bebra.rzhork_ua.model.entity.User;
 import bebra.rzhork_ua.service.UserService;
 import bebra.rzhork_ua.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
 @Controller
 public class UserController {
-
     @Autowired
     private UserService userService;
 
@@ -23,7 +19,7 @@ public class UserController {
         if (username != null) {
             User user = userService.findByUsername(username);
             model.addAttribute("user", user);
-            return "profile";
+            return "user/profile";
         }
         return "redirect:/login";
     }
