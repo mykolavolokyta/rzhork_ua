@@ -1,5 +1,6 @@
 package bebra.rzhork_ua.controller;
 
+import bebra.rzhork_ua.model.dto.VacancyWithRequirementDTO;
 import bebra.rzhork_ua.model.entity.User;
 import bebra.rzhork_ua.model.entity.Vacancy;
 import bebra.rzhork_ua.service.UserService;
@@ -32,6 +33,16 @@ public class VacancyController {
     @GetMapping("/{id}")
     public String getVacancy(@PathVariable UUID id, Model model) {
         Vacancy vacancy = vacancyService.getVacancy(id);
+
+        String formattedDescription = vacancy.getDescription().replace("\n", "<br>");
+        vacancy.setDescription(formattedDescription);
+
+        if (vacancy.getRequirement() != null) {
+            if (vacancy.getRequirement().getSkills() != null) {
+                String formattedSkills = vacancy.getRequirement().getSkills().replace("\n", "<br>    ✡ ");
+                vacancy.getRequirement().setSkills(formattedSkills);
+            }
+        }
         model.addAttribute("vacancy", vacancy);
         return "vacancy/show";
     }
@@ -49,20 +60,19 @@ public class VacancyController {
     }
 
     @PostMapping("/create")
-    public String addVacancy(Vacancy vacancy) {
+    public String addVacancy(VacancyWithRequirementDTO vacancyWithRequirementDTO) {
         String username = SecurityUtils.getCurrentUsername();
         if (username != null) {
             User user = userService.findByUsername(username);
-            vacancy.setCompany(user.getCompany());
-            vacancyService.addVacancy(vacancy);
+            vacancyService.saveVacancyRequirement(vacancyWithRequirementDTO, user.getCompany());
             return "redirect:/vacancies";
         }
         return "redirect:/login";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateVacancy(@PathVariable UUID id, Vacancy vacancy) {
-        vacancyService.updateVacancy(id, vacancy);
+    public String updateVacancy(@PathVariable UUID id, VacancyWithRequirementDTO vacancyWithRequirementDTO) {
+        vacancyService.updateVacancy(id, vacancyWithRequirementDTO);
         return "redirect:/vacancies";
     }
 

@@ -6,7 +6,6 @@ public class EditCompanyDTO {
     private String description;
     private int joinYear;
 
-
     public String getTitle() {
         return title;
     }

@@ -46,6 +46,62 @@
                         rows="4" required
                         th:text="${vacancy.description}"></textarea>
             </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="education">Education Requirement</label>
+                <input th:value="${vacancy.requirement.education}"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       id="education"
+                       name="education"
+                       type="text"
+                       placeholder="Education Requirement">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="experience">Experience (years)</label>
+                <input th:value="${vacancy.requirement.experience}"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       id="experience"
+                       name="experience"
+                       type="number"
+                       placeholder="Experience (years)">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="skills">Skills</label>
+                <textarea
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="skills"
+                    name="skills"
+                    rows="4" required
+                    placeholder="Skills"
+                    th:text="${vacancy.requirement.skills}">
+                </textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="languageRequirements">Language Requirements</label>
+                <input th:value="${vacancy.requirement.languageRequirements}"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       id="languageRequirements"
+                       name="languageRequirements"
+                       type="text"
+                       placeholder="Language Requirements(comma-separated)">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="workSchedule">Work Schedule</label>
+                <input th:value="${vacancy.requirement.workSchedule}"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       id="workSchedule"
+                       name="workSchedule"
+                       type="text"
+                       placeholder="Work Schedule">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="additionalRequirements">Additional Requirements</label>
+                <textarea
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="additionalRequirements"
+                        name="additionalRequirements"
+                        placeholder="Additional Requirements"
+                        rows="4" th:text="${vacancy.requirement.additionalRequirements}"></textarea>
+            </div>
             <div class="flex items-center justify-between">
                 <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit">

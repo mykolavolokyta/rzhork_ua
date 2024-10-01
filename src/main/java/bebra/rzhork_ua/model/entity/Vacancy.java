@@ -18,6 +18,11 @@ public class Vacancy {
     @CreationTimestamp
     @Column(updatable = false)
     private Date date;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requirement_id")
+    private Requirement requirement;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
@@ -57,14 +62,6 @@ public class Vacancy {
         this.location = location;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -79,5 +76,21 @@ public class Vacancy {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Requirement getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(Requirement requirement) {
+        this.requirement = requirement;
     }
 }

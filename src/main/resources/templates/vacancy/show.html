@@ -24,8 +24,38 @@
             </div>
 
             <div class="mb-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-2">Job Description</h2>
-                <p th:text="${vacancy.description}" class="text-gray-700 leading-relaxed"></p>
+                <h2 class="text-xl font-bold text-gray-900 mb-2">Job Description</h2>
+                <p th:utext="${vacancy.description}" class="text-gray-700 leading-relaxed"></p>
+            </div>
+
+            <div class="mb-6" th:if="${vacancy.requirement}">
+                <h2 class="text-xl font-bold text-gray-900 mb-2">Candidate Requirements</h2>
+                <ul class="list-disc pl-5 text-gray-800">
+                    <li th:if="${vacancy.requirement.education != null}">
+                        <span class="font-semibold text-lg">Education:</span>
+                        <span th:text="${vacancy.requirement.education}"></span>
+                    </li>
+                    <li th:if="${vacancy.requirement.experience != null}">
+                        <span class="font-semibold text-lg">Experience:</span>
+                        <span th:text="${vacancy.requirement.experience} + ' years'"></span>
+                    </li>
+                    <li th:if="${vacancy.requirement.skills != null}">
+                        <span class="font-semibold text-lg">Skills:</span>
+                        <span th:utext="'<br>    ✡ ' + ${vacancy.requirement.skills}"></span>
+                    </li>
+                    <li th:if="${vacancy.requirement.languageRequirements != null}">
+                        <span class="font-semibold text-lg">Language Requirements:</span>
+                        <span th:text="${vacancy.requirement.languageRequirements}"></span>
+                    </li>
+                    <li th:if="${vacancy.requirement.workSchedule != null}">
+                        <span class="font-semibold text-lg">Work Schedule:</span>
+                        <span th:text="${vacancy.requirement.workSchedule}"></span>
+                    </li>
+                    <li th:if="${vacancy.requirement.additionalRequirements != null}">
+                        <span class="font-semibold text-lg">Additional Requirements:</span>
+                        <span th:text="${vacancy.requirement.additionalRequirements}"></span>
+                    </li>
+                </ul>
             </div>
 
             <div sec:authorize="hasRole('COMPANY')" class="mt-8 flex justify-end items-center space-x-4">

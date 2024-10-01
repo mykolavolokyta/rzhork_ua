@@ -63,7 +63,6 @@ public class UserService implements UserDetailsService {
         if (userFromDB != null) {
             return false;
         }
-        System.out.println(dto.getCompanyDescription());
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
