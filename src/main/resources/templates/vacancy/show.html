@@ -51,7 +51,7 @@
                         <span class="font-semibold text-lg">Work Schedule:</span>
                         <span th:text="${vacancy.requirement.workSchedule}"></span>
                     </li>
-                    <li th:if="${vacancy.requirement.additionalRequirements != null}">
+                    <li th:if="${not vacancy.requirement.additionalRequirements.isEmpty()}">
                         <span class="font-semibold text-lg">Additional Requirements:</span>
                         <span th:text="${vacancy.requirement.additionalRequirements}"></span>
                     </li>
