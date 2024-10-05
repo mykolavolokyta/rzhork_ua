@@ -3,11 +3,11 @@ package bebra.rzhork_ua.controller;
 import bebra.rzhork_ua.model.entity.Company;
 import bebra.rzhork_ua.service.CompanyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -17,9 +17,14 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @GetMapping
-    public String getCompanies(Model model) {
-        List<Company> companies = companyService.getCompanies();
-        model.addAttribute("companies", companies);
+    public String getCompanies(@RequestParam(value = "page", defaultValue = "0") int page,
+                               @RequestParam(value = "search", required = false) String search,
+                               Model model) {
+        Page<Company> companiesPage = companyService.getFilteredCompanies(search, page);
+        model.addAttribute("companies", companiesPage.getContent());
+        model.addAttribute("totalPages", companiesPage.getTotalPages());
+        model.addAttribute("search", search);
+        model.addAttribute("currentPage", page);
         return "company/index";
     }
 
