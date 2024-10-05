@@ -7,7 +7,7 @@ import bebra.rzhork_ua.model.entity.Vacancy;
 import bebra.rzhork_ua.service.UserService;
 import bebra.rzhork_ua.service.VacancyService;
 import bebra.rzhork_ua.utils.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +17,11 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/vacancies")
+@RequiredArgsConstructor
 public class VacancyController {
-    @Autowired
-    private VacancyService vacancyService;
+    private final VacancyService vacancyService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public String getVacancies(VacancyFilterDTO filterDTO, Model model) {
@@ -31,7 +30,6 @@ public class VacancyController {
         model.addAttribute("totalPages", vacanciesPage.getTotalPages());
         model.addAttribute("currentPage", filterDTO.getPage());
         model.addAttribute("filter", filterDTO);
-
         return "vacancy/index";
     }
 

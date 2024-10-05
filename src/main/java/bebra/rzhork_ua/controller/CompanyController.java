@@ -2,7 +2,7 @@ package bebra.rzhork_ua.controller;
 
 import bebra.rzhork_ua.model.entity.Company;
 import bebra.rzhork_ua.service.CompanyService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +12,9 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/companies")
+@RequiredArgsConstructor
 public class CompanyController {
-    @Autowired
-    private CompanyService companyService;
+    private final CompanyService companyService;
 
     @GetMapping
     public String getCompanies(Model model) {

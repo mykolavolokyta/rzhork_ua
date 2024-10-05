@@ -7,7 +7,7 @@ import bebra.rzhork_ua.model.entity.Requirement;
 import bebra.rzhork_ua.model.entity.Vacancy;
 import bebra.rzhork_ua.repository.RequirementRepository;
 import bebra.rzhork_ua.repository.VacancyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,12 +17,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class VacancyService {
-    @Autowired
-    private VacancyRepository vacancyRepository;
-
-    @Autowired
-    private RequirementRepository requirementRepository;
+    private final VacancyRepository vacancyRepository;
+    private final RequirementRepository requirementRepository;
 
     public Page<Vacancy> getVacancies(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -47,7 +45,6 @@ public class VacancyService {
                 pageable
         );
     }
-
 
     public Vacancy getVacancy(UUID id) {
         return vacancyRepository.findById(id).orElse(null);

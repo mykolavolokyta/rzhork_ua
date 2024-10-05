@@ -7,7 +7,7 @@
 <section th:fragment="content">
     <div class="max-w-7xl mx-auto px-8 sm:px-10 lg:px-12 mt-8 grid grid-cols-4 gap-8">
         <div class="col-span-3">
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8 flex items-center justify-between">
+            <div sec:authorize="hasRole('COMPANY')" class="bg-white rounded-lg shadow-md p-6 mb-8 flex items-center justify-between">
                 <div class="flex items-center">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWtmnfjf1Lk0rais3ed4FV35pB2hEATlZHYw&s"
                          alt="Create Vacancy"
@@ -45,11 +45,14 @@
                         </div>
                     </a>
                 </li>
+                <li th:if="${#lists.isEmpty(vacancies)}" class="py-8 text-center text-gray-500">
+                    По вашому запиту не було знайдено вакансій :(
+                </li>
             </ul>
         </div>
 
         <aside class="col-span-1 py-6">
-            <form th:action="@{/vacancies}" th:object="${filter}" method="get" class="grid grid-cols-1 gap-y-4 p-6 bg-white rounded-lg shadow-md max-w-lg mx-auto">
+            <form id="vacancyFilterForm" th:action="@{/vacancies}" th:object="${filter}" method="get" class="grid grid-cols-1 gap-y-4 p-6 bg-white rounded-lg shadow-md max-w-lg mx-auto">
                 <div>
                     <input type="text" th:field="*{search}" placeholder="Шукати вакансії" class="border border-gray-300 rounded-md p-2 w-full">
                 </div>
@@ -77,24 +80,41 @@
                 </div>
 
                 <div>
-                    <a th:href="@{/vacancies}" class="flex justify-center items-center bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300 w-full">
+                    <button type="button" id="clearButton" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300 w-full">
                         Очистити
-                    </a>
+                    </button>
                 </div>
             </form>
         </aside>
     </div>
-
-    <div class="mb-8 flex justify-center">
+    <script>
+        document.getElementById('clearButton').addEventListener('click', function() {
+            const form = document.getElementById('vacancyFilterForm');
+            const inputs = form.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.value = '';
+            });
+        });
+    </script>
+    <div th:if="${not #lists.isEmpty(vacancies)}" class="mb-8 flex justify-center">
         <nav class="inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
             <a th:href="@{/vacancies(page=${currentPage - 1 < 0 ? 0 : currentPage - 1}, search=${filter.search}, minSalary=${filter.minSalary}, maxSalary=${filter.maxSalary}, startDate=${filter.startDate}, endDate=${filter.endDate})}"
                class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50"
-               th:classappend="${currentPage == 0} ? 'cursor-not-allowed opacity-50' : ''">
+               th:classappend="${currentPage == 0} ? 'cursor-not-allowed opacity-50' : ''"
+               th:if="${currentPage > 0}">
                 <span class="sr-only">Previous</span>
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </a>
+            <span th:if="${currentPage == 0}">
+                <span class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-gray-200 border border-gray-300 rounded-l-md cursor-not-allowed opacity-50">
+                    <span class="sr-only">Previous</span>
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </span>
+            </span>
 
             <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
                 <a th:href="@{/vacancies(page=${i}, search=${filter.search}, minSalary=${filter.minSalary}, maxSalary=${filter.maxSalary}, startDate=${filter.startDate}, endDate=${filter.endDate})}"
@@ -105,12 +125,21 @@
 
             <a th:href="@{/vacancies(page=${currentPage + 1 >= totalPages ? totalPages - 1 : currentPage + 1}, search=${filter.search}, minSalary=${filter.minSalary}, maxSalary=${filter.maxSalary}, startDate=${filter.startDate}, endDate=${filter.endDate})}"
                class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50"
-               th:classappend="${currentPage == totalPages - 1} ? 'cursor-not-allowed opacity-50' : ''">
+               th:classappend="${currentPage == totalPages - 1} ? 'cursor-not-allowed opacity-50' : ''"
+               th:if="${currentPage < totalPages - 1}">
                 <span class="sr-only">Next</span>
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             </a>
+            <span th:if="${currentPage == totalPages - 1}">
+                <span class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-gray-200 border border-gray-300 rounded-r-md cursor-not-allowed opacity-50">
+                    <span class="sr-only">Next</span>
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </span>
+            </span>
         </nav>
     </div>
 </section>

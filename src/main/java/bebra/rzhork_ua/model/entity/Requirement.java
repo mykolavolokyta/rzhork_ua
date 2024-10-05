@@ -1,10 +1,14 @@
 package bebra.rzhork_ua.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Entity
+@Getter @Setter @NoArgsConstructor
 public class Requirement {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -18,71 +22,4 @@ public class Requirement {
 
     @OneToOne(mappedBy = "requirement", cascade = CascadeType.ALL, optional = true)
     private Vacancy vacancy;
-
-    public Requirement() {
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setExperience(String experience) {
-        this.experience = experience;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
-    }
-
-    public String getLanguageRequirements() {
-        return languageRequirements;
-    }
-
-    public void setLanguageRequirements(String languageRequirements) {
-        this.languageRequirements = languageRequirements;
-    }
-
-    public String getWorkSchedule() {
-        return workSchedule;
-    }
-
-    public void setWorkSchedule(String workSchedule) {
-        this.workSchedule = workSchedule;
-    }
-
-    public String getAdditionalRequirements() {
-        return additionalRequirements;
-    }
-
-    public void setAdditionalRequirements(String additionalRequirements) {
-        this.additionalRequirements = additionalRequirements;
-    }
-
-    public Vacancy getVacancy() {
-        return vacancy;
-    }
-
-    public void setVacancy(Vacancy vacancy) {
-        this.vacancy = vacancy;
-    }
 }
