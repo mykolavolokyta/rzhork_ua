@@ -1,5 +1,6 @@
 package bebra.rzhork_ua.controller;
 
+import bebra.rzhork_ua.model.dto.VacancyFilterDTO;
 import bebra.rzhork_ua.model.dto.VacancyWithRequirementDTO;
 import bebra.rzhork_ua.model.entity.User;
 import bebra.rzhork_ua.model.entity.Vacancy;
@@ -7,11 +8,11 @@ import bebra.rzhork_ua.service.UserService;
 import bebra.rzhork_ua.service.VacancyService;
 import bebra.rzhork_ua.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -24,9 +25,13 @@ public class VacancyController {
     private UserService userService;
 
     @GetMapping
-    public String getVacancies(Model model) {
-        List<Vacancy> vacancies = vacancyService.getVacancies();
-        model.addAttribute("vacancies", vacancies);
+    public String getVacancies(VacancyFilterDTO filterDTO, Model model) {
+        Page<Vacancy> vacanciesPage = vacancyService.getFilteredVacancies(filterDTO);
+        model.addAttribute("vacancies", vacanciesPage.getContent());
+        model.addAttribute("totalPages", vacanciesPage.getTotalPages());
+        model.addAttribute("currentPage", filterDTO.getPage());
+        model.addAttribute("filter", filterDTO);
+
         return "vacancy/index";
     }
 

@@ -1,16 +1,19 @@
 package bebra.rzhork_ua.service;
 
+import bebra.rzhork_ua.model.dto.VacancyFilterDTO;
 import bebra.rzhork_ua.model.dto.VacancyWithRequirementDTO;
 import bebra.rzhork_ua.model.entity.Company;
 import bebra.rzhork_ua.model.entity.Requirement;
 import bebra.rzhork_ua.model.entity.Vacancy;
 import bebra.rzhork_ua.repository.RequirementRepository;
 import bebra.rzhork_ua.repository.VacancyRepository;
-import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -21,16 +24,33 @@ public class VacancyService {
     @Autowired
     private RequirementRepository requirementRepository;
 
-    public List<Vacancy> getVacancies() {
-        return vacancyRepository.findAll();
+    public Page<Vacancy> getVacancies(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return vacancyRepository.findAll(pageable);
     }
+
+    public Page<Vacancy> getFilteredVacancies(VacancyFilterDTO filterDTO) {
+        Pageable pageable = PageRequest.of(filterDTO.getPage(), 4);
+
+        String search = (filterDTO.getSearch() == null ? "" : filterDTO.getSearch());
+        Double minSalary = (filterDTO.getMinSalary() == null) ? 0.0 : filterDTO.getMinSalary();
+        Double maxSalary = (filterDTO.getMaxSalary() == null) ? Double.MAX_VALUE : filterDTO.getMaxSalary();
+        LocalDateTime startDate = (filterDTO.getStartDate() == null) ? LocalDateTime.of(1900, 1, 1, 0, 0) : filterDTO.getStartDate().atStartOfDay();
+        LocalDateTime endDate = (filterDTO.getEndDate() == null) ? LocalDateTime.now() : filterDTO.getEndDate().atStartOfDay();
+
+        return vacancyRepository.findFilteredVacancies(
+                search,
+                minSalary,
+                maxSalary,
+                startDate,
+                endDate,
+                pageable
+        );
+    }
+
 
     public Vacancy getVacancy(UUID id) {
         return vacancyRepository.findById(id).orElse(null);
-    }
-
-    public void addVacancy(Vacancy vacancy) {
-        vacancyRepository.save(vacancy);
     }
 
     public void saveVacancyRequirement(VacancyWithRequirementDTO dto, Company company) {
