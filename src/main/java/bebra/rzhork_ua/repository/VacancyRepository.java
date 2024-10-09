@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Repository
 public interface VacancyRepository extends JpaRepository<Vacancy, UUID> {
-    Page<Vacancy> findAll(Pageable pageable);
 
     @Query("SELECT v FROM Vacancy v WHERE "
             + "(v.title LIKE %:search% OR v.location LIKE %:search%) "

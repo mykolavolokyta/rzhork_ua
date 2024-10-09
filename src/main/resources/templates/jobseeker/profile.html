@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{layout :: layout(~{::title}, ~{::content})}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html th:replace="~{layout :: layout(~{::title}, ~{::content})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Profile - rzhork.ua</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,6 +23,20 @@
                             ••••••
                         </span>
                     </p>
+                    <div class="mt-4 text-base sm:text-lg" th:switch="${user.roles[0].getName()}">
+                        <p th:case="'ROLE_JOBSEEKER'" class="text-green-600">
+                            Ви работяга.
+                        </p>
+                        <p th:case="'ROLE_COMPANY'" class="text-blue-600">
+                            Ви експлуатарор дешевої робочої сили.
+                        </p>
+                        <p th:case="'ROLE_ADMIN'" class="text-orange-600">
+                            Ви бос цієї качалки.
+                        </p>
+                        <p th:case="*">
+                            Ви ноунейм.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

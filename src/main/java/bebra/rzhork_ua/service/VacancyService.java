@@ -7,6 +7,7 @@ import bebra.rzhork_ua.model.entity.Requirement;
 import bebra.rzhork_ua.model.entity.Vacancy;
 import bebra.rzhork_ua.repository.RequirementRepository;
 import bebra.rzhork_ua.repository.VacancyRepository;
+import bebra.rzhork_ua.utils.PrototypeBean;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,13 +22,10 @@ import java.util.UUID;
 public class VacancyService {
     private final VacancyRepository vacancyRepository;
     private final RequirementRepository requirementRepository;
-
-    public Page<Vacancy> getVacancies(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return vacancyRepository.findAll(pageable);
-    }
+    private final PrototypeBean prototypeBean;
 
     public Page<Vacancy> getFilteredVacancies(VacancyFilterDTO filterDTO) {
+        prototypeBean.doSomething();
         Pageable pageable = PageRequest.of(filterDTO.getPage(), 4);
 
         String search = (filterDTO.getSearch() == null ? "" : filterDTO.getSearch());
